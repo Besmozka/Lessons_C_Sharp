@@ -1,0 +1,38 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Lesson_4
+{
+    class Task_1
+    {
+        static void Main(string[] args)
+        {
+
+            Console.Write("Введите имя: ");
+            string firstName = Console.ReadLine();
+            Console.Write("Введите фамилию: ");
+            string lastName = Console.ReadLine();
+            Console.Write("Введите отчество: ");
+            string patronymic = Console.ReadLine();
+            Console.WriteLine(GetFullName(firstName, lastName, patronymic));
+
+            string[] firstNameArray = { "Homer", "Bartholomew", "Bender" };
+            string[] lastNameArray = { "Simpson", "Simpson", "Bending" };
+            string[] patronymicArray = { "Jay", "Jo-Jo", "Rodriguez" };
+            for (int i = 0; i < firstNameArray.Length; i++)
+            {
+                Console.WriteLine(GetFullName(firstNameArray[i], lastNameArray[i], patronymicArray[i]));
+            }
+            Console.ReadKey();
+        }
+
+        static string GetFullName(string firstName, string lastName, string patronymic)
+        {
+            string fullName = $"ФИО: {firstName} {lastName} {patronymic}";
+            return fullName;
+        }
+    }
+}
