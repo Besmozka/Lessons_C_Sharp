@@ -1,9 +1,9 @@
 ﻿public static int StrangeSum(int[] inputArray)
 {
     int sum = 0;
-    for (int i = 0; i < inputArray.Length; i++) // N * N * N
+    for (int i = 0; i < inputArray.Length; i++) // N
     {
-        for (int j = 0; j < inputArray.Length; j++) // N * N
+        for (int j = 0; j < inputArray.Length; j++) // N
         {
             for (int k = 0; k < inputArray.Length; k++) // N
             {
@@ -19,8 +19,5 @@
         }
     }
 
-    return sum;
-}
-
-
-Итоговая асимптотическая сложность равна О(N*N*N)
+    return sum; // 1
+}  //   Итоговая асимптотическая сложность равна О(N*N*N), или N в кубе
