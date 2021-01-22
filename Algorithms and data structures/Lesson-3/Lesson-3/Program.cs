@@ -39,9 +39,11 @@ namespace Task_1
         static void GetArray(int arrayLength)
         {
             Random random = new Random();
+            var array = new int[arrayLength];
             for (int i = 0; i < arrayLength - 1; i++)
             {
-
+                array[i] = random.Next(0, 100);
+                Console.WriteLine(array[i]);
             }
         }
     }
