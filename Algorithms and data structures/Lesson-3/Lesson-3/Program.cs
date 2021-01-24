@@ -36,6 +36,20 @@ namespace Task_1
             Console.ReadKey();
         }
 
+        public static double PointDistanceDouble(PointStruct pointOne, PointStruct pointTwo)
+        {
+            double x = pointOne.X - pointTwo.X;
+            double y = pointOne.Y - pointTwo.Y;
+            return Math.Sqrt((x * x) + (y * y));
+        }
+
+        public static float PointDistance(PointStruct pointOne, PointStruct pointTwo)
+        {
+            float x = pointOne.X - pointTwo.X;
+            float y = pointOne.Y - pointTwo.Y;
+            return MathF.Sqrt((x * x) + (y * y));
+        }
+
         static void GetArray(int arrayLength)
         {
             Random random = new Random();
