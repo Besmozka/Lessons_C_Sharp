@@ -15,5 +15,10 @@ namespace Lesson_4
         {
             Data = _Data;
         }
+
+        public Node()
+        {
+
+        }
     }
 }
