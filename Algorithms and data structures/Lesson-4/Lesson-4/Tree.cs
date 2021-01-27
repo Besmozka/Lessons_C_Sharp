@@ -156,31 +156,31 @@ namespace Lesson_4
             return Root;
         }
 
-        public void PrintPretty(string indent, bool last)
-        {
-            Console.Write(indent);
-            if (last)
-            {
-                Console.Write("└─");
-                indent += "  ";
-            }
-            else
-            {
-                Console.Write("├─");
-                indent += "| ";
-            }
-            Console.WriteLine(Data);
+        //public void PrintPretty(string indent, bool last)
+        //{
+        //    Console.Write(indent);
+        //    if (last)
+        //    {
+        //        Console.Write("└─");
+        //        indent += "  ";
+        //    }
+        //    else
+        //    {
+        //        Console.Write("├─");
+        //        indent += "| ";
+        //    }
+        //    Console.WriteLine(Data);
 
-            var children = new List<BNode>();
-            if (this.left != null)
-                children.Add(this.left);
-            if (this.right != null)
-                children.Add(this.right);
+        //    var children = new List<BNode>();
+        //    if (this.left != null)
+        //        children.Add(this.left);
+        //    if (this.right != null)
+        //        children.Add(this.right);
 
-            for (int i = 0; i < children.Count; i++)
-                children[i].PrintPretty(indent, i == children.Count - 1);
+        //    for (int i = 0; i < children.Count; i++)
+        //        children[i].PrintPretty(indent, i == children.Count - 1);
 
-        }
+        //}
         ///// <summary>
         ///// Поиск узла по значению
         ///// </summary>
@@ -188,6 +188,7 @@ namespace Lesson_4
         ///// <param name="startWithNode">Узел начала поиска</param>
         ///// <returns>Найденный узел</returns>
         //public Node FindNode(int value, Node startWithNode = null)
+
         //{
         //    startWithNode = startWithNode ?? Root;
         //    int result;

@@ -4,23 +4,23 @@ using System.Text;
 
 namespace Task_1
 {
-    public class HashInt
+    public class HashString
     {
         public string value { get; set; }
 
         public override bool Equals(object obj)
         {
-            var hashInt = obj as HashInt;
+            var hashString = obj as HashString;
 
-            if (hashInt == null)
+            if (hashString == null)
                 return false;
 
-            return value == hashInt.value;
+            return value == hashString.value;
         }
 
         public override int GetHashCode()
         {
-            int hashCode = value?.GetHashCode() ?? 0;            
+            int hashCode = value?.GetHashCode() ?? 0;
             return hashCode;
         }
 

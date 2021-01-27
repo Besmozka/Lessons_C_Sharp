@@ -16,6 +16,7 @@ namespace Task
     {
         static float[] fArray = GetFloatArray(10000);
         static double[] dArray= GetDoubleArray(10000);
+
         public static float[] GetFloatArray(int arrayLength)
         {
             Random random = new Random();
