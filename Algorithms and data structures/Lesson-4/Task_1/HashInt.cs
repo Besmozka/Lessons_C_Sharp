@@ -4,9 +4,9 @@ using System.Text;
 
 namespace Task_1
 {
-    class HashInt
+    public class HashInt
     {
-        public int value { get; set; }
+        public string value { get; set; }
 
         public override bool Equals(object obj)
         {
