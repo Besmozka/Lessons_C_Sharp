@@ -6,11 +6,12 @@ namespace Lesson_4
 {
     public interface ITree
     {
-        int count { get; set; }  // количество элементов в дереве
+        int count { get; set; }
         void AddData(int value);
         void DeleteData(int value);
-        Node SeachData(int value); //поиск элемента
-        void BalanceTree(); //баланс дерева
-        void DrawTree(); //нарисовать дерево
+        void Print();
+        public List<int> InorderList(Node node);
+        Node SeachData(Node root, int value); 
+        public Node BalancedTree(List<int> values, int min, int max);
     }
 }

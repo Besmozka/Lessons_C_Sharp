@@ -6,9 +6,11 @@ namespace Lesson_4
 {
     public class Tree : ITree
     {
-        public  int count { get; set; }
+        public int count { get; set; }
 
         public Node Root;
+
+        public int indexArray = 0;
 
         public void AddData(int value)
         {
@@ -34,26 +36,26 @@ namespace Lesson_4
                             return;
                         }
                     }
-                    else 
+                    else
                         if (value <= tmp.Data)
+                    {
+                        if (tmp.Left != null)
                         {
-                            if (tmp.Left != null)
-                            {
-                                tmp = tmp.Left;
-                                continue;
-                            }
-                            else
-                            {
-                                tmp.Left = new Node(value);
-                                tmp.Left.Parent = tmp.Parent;
-                                count++;
-                                return;
-                            }
+                            tmp = tmp.Left;
+                            continue;
                         }
                         else
                         {
-                            throw new Exception("Данное дерево не дерево поиска");
+                            tmp.Left = new Node(value);
+                            tmp.Left.Parent = tmp.Parent;
+                            count++;
+                            return;
                         }
+                    }
+                    else
+                    {
+                        throw new Exception("Данное дерево не дерево поиска");
+                    }
 
                 }
         }
@@ -78,7 +80,7 @@ namespace Lesson_4
                     }
                     else
                     {
-                        Console.WriteLine("Такого элемента нет в дереве");
+                        Console.WriteLine("Не могу удалить несуществующий элемент");
                         return;
                     }
                 }
@@ -94,7 +96,7 @@ namespace Lesson_4
                         }
                         else
                         {
-                            Console.WriteLine("Такого элемента нет в дереве");
+                            Console.WriteLine("Не могу удалить несуществующий элемент");
                             return;
                         }
                     }
@@ -123,7 +125,7 @@ namespace Lesson_4
                             parent.Left = tmp.Right;
                             count--;
                             return;
-                        } 
+                        }
                         else if (parent.Right.Data == tmp.Data)
                         {
                             parent.Right = null;
@@ -137,96 +139,58 @@ namespace Lesson_4
                             return;
                         }
                     }
-                }                
+                }
             }
         }
 
-        public void BalanceTree()
+        public void Print()
         {
-
+            PrintTree.Print(Root);
         }
 
-        public void DrawTree()
+        public List<int> InorderList(Node node)
         {
-           
+            var list = new List<int>();
+            if (Root == null)
+            {
+                Console.WriteLine("Дерева не существует");
+                return null;
+            }
+            if (node.Left != null)
+                list.AddRange(InorderList(node.Left));
+            list.Add(node.Data);
+            if (node.Right != null)
+                list.AddRange(InorderList(node.Right));
+            return list;
         }
 
-        public Node SeachData(int value)
+        public Node BalancedTree(List<int> values, int min, int max)
         {
-            return Root;
+            if (min == max)
+                return null;
+
+            int median = min + (max - min) / 2;
+            return new Node
+            {
+                Data = values[median],
+                Left = BalancedTree(values, min, median),
+                Right = BalancedTree(values, median + 1, max)
+            };
         }
 
-        //public void PrintPretty(string indent, bool last)
-        //{
-        //    Console.Write(indent);
-        //    if (last)
-        //    {
-        //        Console.Write("└─");
-        //        indent += "  ";
-        //    }
-        //    else
-        //    {
-        //        Console.Write("├─");
-        //        indent += "| ";
-        //    }
-        //    Console.WriteLine(Data);
-
-        //    var children = new List<BNode>();
-        //    if (this.left != null)
-        //        children.Add(this.left);
-        //    if (this.right != null)
-        //        children.Add(this.right);
-
-        //    for (int i = 0; i < children.Count; i++)
-        //        children[i].PrintPretty(indent, i == children.Count - 1);
-
-        //}
-        ///// <summary>
-        ///// Поиск узла по значению
-        ///// </summary>
-        ///// <param name="value">Искомое значение</param>
-        ///// <param name="startWithNode">Узел начала поиска</param>
-        ///// <returns>Найденный узел</returns>
-        //public Node FindNode(int value, Node startWithNode = null)
-
-        //{
-        //    startWithNode = startWithNode ?? Root;
-        //    int result;
-        //    return (result = value.CompareTo(startWithNode.Data)) == 0
-        //        ? startWithNode
-        //        : result < 0
-        //            ? startWithNode.LeftNode == null
-        //                ? null
-        //                : FindNode(value, startWithNode.LeftNode)
-        //            : startWithNode.RightNode == null
-        //                ? null
-        //                : FindNode(value, startWithNode.RightNode);
-        //}
-        ///// <summary>
-        ///// Вывод бинарного дерева
-        ///// </summary>
-        //public void PrintTree()
-        //{
-        //    PrintTree(Root);
-        //}
-
-        ///// <summary>
-        ///// Вывод бинарного дерева начиная с указанного узла
-        ///// </summary>
-        ///// <param name="startNode">Узел с которого начинается печать</param>
-        ///// <param name="indent">Отступ</param>
-        ///// <param name="side">Сторона</param>
-        //private void PrintTree(Node startNode, string indent = "", Side? side = null)
-        //{
-        //    if (startNode != null)
-        //    {
-        //        var nodeSide = side == null ? "+" : side == Side.Left ? "L" : "R";
-        //        Console.WriteLine($"{indent} [{nodeSide}]- {startNode.Data}");
-        //        indent += new string(' ', 3);
-        //        //рекурсивный вызов для левой и правой веток
-        //        PrintTree(startNode.LeftNode, indent, Side.Left);
-        //        PrintTree(startNode.RightNode, indent, Side.Right);
-        //    }
-        //}
+        public Node SeachData(Node root, int value)
+        {
+            if (root != null)
+            {
+                if (root.Data == value)
+                {                    
+                    Console.WriteLine("Найдено");
+                    return root;
+                }
+                SeachData(root.Left, value);
+                SeachData(root.Right, value);
+            }
+            return null;
+        }
     }
 }
