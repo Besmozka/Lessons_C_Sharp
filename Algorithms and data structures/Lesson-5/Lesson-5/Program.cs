@@ -8,7 +8,7 @@ namespace Lesson_5
         static void Main(string[] args)
         {
             var tree = new BinaryTree();
-            var treeSize = 20;
+            var treeSize = 10;
             var randomInt = new Random();
             for (int i = 0; i < treeSize; i++)
             {
@@ -38,22 +38,54 @@ namespace Lesson_5
                     Console.WriteLine("Найдено");
                     return node;
                 }
-                else if (node.Left != null)
+                else
                 {
-                    queue.Enqueue(node.Left);
-                    node = node.Left;
-                }
-                else if (node.Right != null)
-                {
-                    queue.Enqueue(node.Right);
-                    node = node.Right;
+                    if (node.Left != null)
+                    {
+                        queue.Enqueue(node.Left);
+                        node = node.Left;
+                    }
+                    if (node.Right != null)
+                    {
+                        queue.Enqueue(node.Right);
+                        node = node.Right;
+                    }
                 }
             }
         }
 
-        static void DFSmethod(BinaryTree binaryTree)
+        static Node DFSmethod(BinaryTree binaryTree, int searchValue)
         {
-
+            var stack = new Stack();
+            var node = binaryTree.Root;
+            stack.Push(node);
+            Node nodeData;
+            while (true)
+            {
+                if (stack == null)
+                {
+                    return null;
+                }
+                nodeData = (Node)stack.Pop();
+                if (nodeData.Data == searchValue)
+                {
+                    Console.WriteLine("Найдено");
+                    return node;
+                }
+                else
+                {
+                    if (node.Left != null)
+                    {
+                        stack.Push(node.Left);
+                        node = node.Left;
+                    }
+                    if (node.Right != null)
+                    {
+                        stack.Push(node.Right);
+                        node = node.Right;
+                    }
+                }
+            }
         }
     }
 }
