@@ -32,7 +32,7 @@ namespace Lesson_5
                 {
                     return null;
                 }
-                nodeData = (Node)queue.Dequeue();
+                nodeData = (Node)queue.Dequeue(); //поменять но node
                 if (nodeData.Data == searchValue)
                 {
                     Console.WriteLine("Найдено");
@@ -53,7 +53,21 @@ namespace Lesson_5
 
         static void DFSmethod(BinaryTree binaryTree)
         {
+            var stack = new Stack();
+            var node = binaryTree.Root;
+            stack.Push(node);
+            while (stack != null)
+            {
+                if (node.Left != null)
+                {
+                    stack.Push(node.Left);
+                    if (node.Right != null)
+                    {
+                        stack.Push(node.Right);
+                    }
+                }
 
+            }
         }
     }
 }
