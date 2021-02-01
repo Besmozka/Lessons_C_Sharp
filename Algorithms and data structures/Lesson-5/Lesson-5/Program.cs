@@ -15,9 +15,9 @@ namespace Lesson_5
                 tree.AddData(randomInt.Next(100));
             }
             tree.PrintTree();
-
             var value = Convert.ToInt32(Console.ReadLine());
             BFSmethod(tree, value);
+            DFSmethod(tree, value);
         }
 
         static Node BFSmethod(BinaryTree binaryTree, int searchValue)
@@ -25,48 +25,72 @@ namespace Lesson_5
             var queue = new Queue();
             var node = binaryTree.Root;
             queue.Enqueue(node);
-            Node nodeData;
             while (true)
             {
-                if (queue == null)
+                if (queue.Count == 0)
                 {
+                    Console.WriteLine("Не найдено");
                     return null;
                 }
-                nodeData = (Node)queue.Dequeue(); //поменять но node
-                if (nodeData.Data == searchValue)
+                node = (Node)queue.Dequeue();
+                Console.WriteLine($"Вытаскиваем из очередь {node.Right.Data}");
+                if (node.Data == searchValue)
                 {
                     Console.WriteLine("Найдено");
                     return node;
                 }
-                else if (node.Left != null)
+                else 
                 {
-                    queue.Enqueue(node.Left);
-                    node = node.Left;
+                    if (node.Left != null)
+                    {
+                        queue.Enqueue(node.Left);
+                        Console.WriteLine($"Добавляем в очередь {node.Left.Data}");
+                    }
+                    if (node.Right != null)
+                    {
+                        queue.Enqueue(node.Right);
+                        Console.WriteLine($"Добавляем в очередь {node.Right.Data}");
+                    }
                 }
-                else if (node.Right != null)
-                {
-                    queue.Enqueue(node.Right);
-                    node = node.Right;
-                }
+                Console.WriteLine("Нажмите любую клавишу для следующей итерации цикла");
+                Console.ReadKey();
             }
         }
 
-        static void DFSmethod(BinaryTree binaryTree)
+        static Node DFSmethod(BinaryTree binaryTree, int searchValue)
         {
             var stack = new Stack();
             var node = binaryTree.Root;
             stack.Push(node);
-            while (stack != null)
+            while (true)
             {
-                if (node.Left != null)
+                if (stack == null)
                 {
-                    stack.Push(node.Left);
+                    Console.WriteLine("Не найдено");
+                    return null;
+                }
+                node = (Node)stack.Pop();
+                Console.WriteLine($"Вытаскиваем из стэка {node.Data}");
+                if (node.Data == searchValue)
+                {
+                    Console.WriteLine("Найдено");
+                    return node;
+                }
+                else
+                {
                     if (node.Right != null)
                     {
+                        Console.WriteLine($"Добавляем в стэк {node.Right.Data}");
                         stack.Push(node.Right);
                     }
+                    if (node.Left != null)
+                    {
+                        Console.WriteLine($"Добавляем в стэк {node.Left.Data}");
+                        stack.Push(node.Left);
+                    }
                 }
-
+                Console.WriteLine("Нажмите любую клавишу для следующей итерации цикла");
+                Console.ReadKey();
             }
         }
     }
