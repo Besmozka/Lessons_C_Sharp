@@ -6,8 +6,8 @@ namespace Lesson_6_Graphs_
 {
     class Node
     {
-        public object Value { get; set; }
+        public string Value { get; set; }
 
-        public List<Edge> Edges { get; set; }
+        public Dictionary<Node, int> Edges { get; set; }
     }
 }
