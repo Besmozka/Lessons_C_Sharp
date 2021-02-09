@@ -15,6 +15,7 @@ namespace Lesson_6_Graphs_
             graph.AddNode("Four");
             graph.AddNode("Five");
             graph.AddNode("Six");
+            graph.AddEdge(graph.Nodes[0], graph.Nodes[1], 10);
             graph.AddEdge(graph.Nodes[1], graph.Nodes[2], 10);
             graph.AddEdge(graph.Nodes[2], graph.Nodes[3], 1);
             graph.AddEdge(graph.Nodes[4], graph.Nodes[3], 7);
@@ -22,10 +23,11 @@ namespace Lesson_6_Graphs_
             graph.AddEdge(graph.Nodes[5], graph.Nodes[1], 40);
             graph.AddEdge(graph.Nodes[4], graph.Nodes[2], 13);
             graph.AddEdge(graph.Nodes[5], graph.Nodes[2], 11);
+            BFSmethod(graph, "Five");
             Console.ReadLine();
         }
 
-        public Node BFSmethod(SimpleGraph graph, string searchValue)
+        public static Node BFSmethod(SimpleGraph graph, string searchValue)
         {
 
             if (graph.Nodes == null)
@@ -34,14 +36,12 @@ namespace Lesson_6_Graphs_
                 return null; 
             }                
             var queue = new Queue();
-            var visitedNodes = new Node[graph.Nodes.Count];
-            var currentNodes = new Node[graph.Nodes.Count];
-            var notVisitedNodes = new Node[graph.Nodes.Count];
-            for (int i = 0; i < graph.Nodes.Count - 1; i++)
-            {
-                notVisitedNodes[i] = graph.Nodes[i];
-            }
-            currentNodes[0] = graph.Nodes[0];
+            var visitedNodes = new List<Node>();
+            var currentNodes = new List<Node>();
+            var notVisitedNodes = new List<Node>();
+            Node tempNode = null;
+            notVisitedNodes.AddRange(graph.Nodes);
+            queue.Enqueue(graph.Nodes[0]);
             Console.WriteLine($"Заносим первый элемент в очередь: {graph.Nodes[0].Value}");
             while (true)
             {
@@ -50,7 +50,14 @@ namespace Lesson_6_Graphs_
                     Console.WriteLine($"Значение {searchValue} в графе не найдено");
                     return null;
                 }
-                for (int i = 0; i < currentNodes.Length - 1; i++)
+                for (int i = 0; i < queue.Count; i++)
+                {             
+                    tempNode = (Node)queue.Dequeue();
+                    Console.WriteLine($"Извлекаем из очереди в список Проверяемых: {tempNode.Value}");
+                    currentNodes.Add(tempNode);
+                }
+
+                for (int i = 0; i < currentNodes.Count; i++)
                 {
                     if (currentNodes[i].Value == searchValue)
                     {
@@ -59,15 +66,27 @@ namespace Lesson_6_Graphs_
                     }
                     else
                     {
-                        for (int j = 0; j < currentNodes[i].Edges.Count; j++)
+                        if (!visitedNodes.Contains(currentNodes[i]))
                         {
-                            currentNodes[i].Edges.Keys.
+                            foreach (KeyValuePair<Node, int> edgeNodes in currentNodes[i].Edges)
+                            {
+                                Console.WriteLine($"Добавляем в очередь: {edgeNodes.Key.Value} и удаляем его из списка Непроверенных");
+                                queue.Enqueue(edgeNodes.Key);
+                                notVisitedNodes.Remove(edgeNodes.Key);
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine($"{currentNodes[i].Value} есть в списке Проверенных, пропускаем");
                         }
                     }
                 }
+                Console.WriteLine("Добавляем все ноды из списка Проверяемых в список Проверенных, и очищаем список Проверяемых");
+                visitedNodes.AddRange(currentNodes);
+                currentNodes.Clear();
             }            
         }
-        public void DFSmethod(SimpleGraph graph, string searchValue)
+        public static void DFSmethod(SimpleGraph graph, string searchValue)
         {
 
         }
