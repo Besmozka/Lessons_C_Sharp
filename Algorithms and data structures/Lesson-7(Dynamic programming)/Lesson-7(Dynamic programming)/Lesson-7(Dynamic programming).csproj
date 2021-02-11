@@ -6,4 +6,9 @@
     <RootNamespace>Lesson_7_Dynamic_programming_</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="BenchmarkDotNet" Version="0.12.1" />
+    <PackageReference Include="BenchmarkDotNet.Core" Version="0.10.14" />
+  </ItemGroup>
+
 </Project>
