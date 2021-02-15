@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Lesson_8_Busket_sort_
 {
@@ -18,33 +19,32 @@ namespace Lesson_8_Busket_sort_
             var array = new int[arrayLenght];
             for (int i = 0; i < array.Length - 1; i++)
             {
-                array[i] = random.Next(1000);
+                array[i] = random.Next(50);
             }
+            BusketSort(array);
+            Console.ReadKey();
         }
 
         static int[] BusketSort(int[] array)
         {
-            int[] minArray = new int[array.Length / 2];
-            int[] maxArray = new int[array.Length - minArray.Length];
-            int maxCount = 0, minCount = 0;
+            var minArray = new List<int>();
+            var maxArray = new List<int>();
             if (array == null)
             {
                 Console.WriteLine("Данный массив не существует");
                 return null;
             }
-            if (array.Length != 0)
+            if (array.Length > 1)
             {
-                for (int i = 0; i < array.Length - 1; i++)
+                for (int i = 0; i < array.Length; i++)
                 {
-                    if (array[array.Length/2] >= array[i])
+                    if (array[array.Length/2] <= array[i])
                     {
-                        maxArray[maxCount] = array[i];
-                        maxCount++;
+                        maxArray.Add(array[i]);
                     }
                     else
                     {
-                        minArray[minCount] = array[i];
-                        minCount++;
+                        minArray.Add(array[i]);
                     }
                 }
             }
