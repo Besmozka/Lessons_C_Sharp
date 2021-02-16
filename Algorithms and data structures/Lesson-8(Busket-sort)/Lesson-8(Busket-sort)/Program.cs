@@ -93,56 +93,36 @@ namespace Lesson_8_Busket_sort_
             return array;
         }
 
-        static void QuickSort(List<int> blockList, int minIndex, int maxIndex)
+        static int Partition(List<int> array, int start, int end)
         {
-            if (minIndex >= maxIndex)
+            int temp;//swap helper помошник в свапе
+            int marker = start;//divides left and right subarrays  делит левый и правый подмассивы
+            for (int i = start; i <= end; i++)   
+            {
+                if (array[i] < array[end]) //array[end] is pivot
+                {
+                    temp = array[marker]; // swap
+                    array[marker] = array[i];
+                    array[i] = temp;
+                    marker += 1;
+                }
+            }
+            //put pivot(array[end]) between left and right subarrays
+            temp = array[marker];
+            array[marker] = array[end];
+            array[end] = temp;
+            return marker;
+        }
+
+        static void QuickSort(List<int> array, int start, int end)
+        {
+            if (start >= end)
             {
                 return;
             }
-            var middleValue = (maxIndex - minIndex) / 2;
-            var min = minIndex;
-            var max = maxIndex;
-            for (int i = 0; i < maxIndex; i++)
-            {
-                if (blockList[i] >= blockList[max])
-                {
-                    var temp = blockList[max];
-                    blockList[max] = blockList[i];
-                    blockList[i] = temp;
-                    max--;
-                }
-            }
-            QuickSort(blockList, minIndex, middleValue);
-            QuickSort(blockList, middleValue, maxIndex);
-        }
-
-        //static int[] MergeSort(List<int> blockList, int lowIndex, int highIndex)
-        //{
-        //    if (lowIndex < highIndex)
-        //    {
-        //        if (highIndex - lowIndex == 1)
-        //        {
-        //            if (blockList[highIndex] < blockList[lowIndex])
-        //            {
-        //                var t = blockList[lowIndex];
-        //                blockList[lowIndex] = blockList[highIndex];
-        //                blockList[highIndex] = t;
-        //            }
-        //        }
-        //        else
-        //        {
-        //            var middleIndex = (lowIndex + highIndex) / 2;
-        //            MergeSort(blockList, lowIndex, middleIndex);
-        //            MergeSort(blockList, middleIndex + 1, highIndex);
-        //            Merge(blockList, lowIndex, middleIndex, highIndex);
-        //        }
-        //    }
-
-        //    return blockList;
-
-            static int[] ExternalSort()
-        {
-            return null;
+            int pivot = Partition(array, start, end);
+            QuickSort(array, start, pivot - 1);
+            QuickSort(array, pivot + 1, end);
         }
     }
 }
