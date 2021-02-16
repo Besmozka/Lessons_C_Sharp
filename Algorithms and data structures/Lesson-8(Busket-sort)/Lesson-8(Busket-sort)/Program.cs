@@ -16,14 +16,18 @@ namespace Lesson_8_Busket_sort_
                     break;
                 
             }
+
             var array = new int[arrayLenght];
             for (int i = 0; i < array.Length; i++)
             {
                 array[i] = random.Next(100);
             }
+
             var min = GetMinValue(array);
             var max = GetMaxValue(array);
+
             BusketSort(array, min, max);
+
             Console.ReadKey();
         }
 
@@ -32,10 +36,7 @@ namespace Lesson_8_Busket_sort_
             int min = array[0];
             for (int i = 0; i < array.Length; i++)
             {
-                if (min > array[i]) //Евгений, подскажите пожалуйста,
-                {                   //есть какой либо "сахарный" вариант записи
-                    min = array[i]; //такого сравнения и присваивания?
-                }
+                min = min > array[i] ? array[i]: min;
             }
             return min;
         }
@@ -45,10 +46,7 @@ namespace Lesson_8_Busket_sort_
             int max = array[0];
             for (int i = 0; i < array.Length; i++)
             {
-                if (max < array[i]) //Евгений, подскажите пожалуйста,
-                {                   //есть какой либо "сахарный" вариант записи
-                    max = array[i]; //такого сравнения и присваивания?
-                }
+                max = max < array[i] ? array[i] : max;
             }
             return max;
         }
@@ -60,10 +58,11 @@ namespace Lesson_8_Busket_sort_
             {
                 blockLists[i] = new List<int>();
             }
-            int dValue = (maxValue - minValue) / numberBuskets;
-            for (int i = 0; i < array.Length; i++)
+            int dValue = (maxValue - minValue) / numberBuskets; //определение необходимого диапазона данных для блока 
+
+            for (int i = 0; i < array.Length; i++) 
             {
-                for (int j = 0; j < numberBuskets; j++)
+                for (int j = 0; j < numberBuskets; j++) //цикл для приращивания диапазона данных для блока 
                 {
                     if (j == 0)
                     {
@@ -88,26 +87,41 @@ namespace Lesson_8_Busket_sort_
                     }
                 }
             }
-            QuickSort(blockLists[0], 0, blockLists[0].Count - 1);
-            
+
+            for (int i = 0; i < blockLists.Length; i++)
+            {
+                QuickSort(blockLists[i], 0, blockLists[i].Count - 1);             
+            }
+
+            int arrayIndex = 0;
+            int listIndex;
+            for (int i = 0; i < blockLists.Length; i++)
+            {
+                listIndex = 0;
+                while (listIndex != blockLists[i].Count)
+                {
+                    array[arrayIndex] = blockLists[i][listIndex];
+                    arrayIndex++;
+                    listIndex++;
+                }
+            }            
             return array;
         }
 
         static int Partition(List<int> array, int start, int end)
         {
-            int temp;//swap helper помошник в свапе
-            int marker = start;//divides left and right subarrays  делит левый и правый подмассивы
+            int temp;
+            int marker = start;
             for (int i = start; i <= end; i++)   
             {
-                if (array[i] < array[end]) //array[end] is pivot
+                if (array[i] < array[end])
                 {
-                    temp = array[marker]; // swap
+                    temp = array[marker];
                     array[marker] = array[i];
                     array[i] = temp;
-                    marker += 1;
+                    marker++;
                 }
-            }
-            //put pivot(array[end]) between left and right subarrays
+            }           
             temp = array[marker];
             array[marker] = array[end];
             array[end] = temp;
